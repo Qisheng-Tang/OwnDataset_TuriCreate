@@ -69,28 +69,28 @@ After finishing steps above, you will have a dataset which belongs to you. The n
   ```python 
   import turicreate as turi
   ```
-  After this step, you can use turi instead of turicreate. It will be convenient for you in the future.
+After this step, you can use turi instead of turicreate. It will be convenient for you in the future.
   
 * Set the path of file and load the images
   ```python
   filepath = "actordataset/"
   data = turi.image_analysis.load_images(filepath)
   ```
-  In this step, I put actordataset and python file in a same folder, so we just need set the name of dataset folder as the path.
+In this step, I put actordataset and python file in a same folder, so we just need set the name of dataset folder as the path.
   The **turi.image_analysis.load_images** will import your dataset to the project.
 
 * Give image labels
 ```python
 data["TonyLiangOrAerisLu"] = data["path"].apply(lambda path: "Liang" if "tonyliang" in path else "Lu")
 ```
-      This line of code will read the name of folder as I mentioned above. For images in tonyliang, the program will assign a label as **Liang**. Else, the program will assign a label **Lu** to the rest images.
+  This line of code will read the name of folder as I mentioned above. For images in tonyliang, the program will assign a label as **Liang**. Else, the program will assign a label **Lu** to the rest images.
 
 * Save the data model and view it
 ```python
 data.save("liang_or_lu.sframe")
 data.explore()
 ```
-      Turi Create provides a method to help you confirm whether you give correct label to each images. You can view label for each image in a visual interface.
+Turi Create provides a method to help you confirm whether you give correct label to each images. You can view label for each image in a visual interface.
 * load the sframe file
 ```python
 data = turi.SFrame("liang_or_lu.sframe")
@@ -99,13 +99,15 @@ data = turi.SFrame("liang_or_lu.sframe")
 ```python
 train_data, test_data = data.random_split(0.8)
 ```
-In each label, 80% images will be used in training and 20% images will be tested your model. You can choose the proportion by changing the number.
+
+  In each label, 80% images will be used in training and 20% images will be tested your model. You can choose the proportion by changing the number.
 
 * Create model
 ```python
 model = turi.image_classifier.create(train_data, target="TonyLiangOrAerisLu", max_iterations=30)
 ```
- This functions set max iterations to 30 to get a better result. You can also choose the neural network by using the parameter **model**. Apple now supports 3 neural networks: resnet-50, squeezenet_v1.1, and VisionFeaturePrint_Scene.
+
+This functions set max iterations to 30 to get a better result. You can also choose the neural network by using the parameter **model**. Apple now supports 3 neural networks: resnet-50, squeezenet_v1.1, and VisionFeaturePrint_Scene.
 
  ### Test your model and export to CoreML model
 
